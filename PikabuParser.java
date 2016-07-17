@@ -59,10 +59,10 @@ public class PikabuParser {
 		}
 	}
 	
-	public String get_page (String tab, int page_num) {		//tab = hot | best | new
+	public String get_page (String tab, int page_num) {		//tab = hot || best || new
 		String page = "";
 		try {    
-            HttpGet httpGet = new HttpGet("http://pikabu.ru/best?twitmode=1&page=" + page_num);            
+            HttpGet httpGet = new HttpGet("http://pikabu.ru/" + tab + "?twitmode=1&page=" + page_num);            
             CloseableHttpResponse response1 = httpclient.execute(httpGet); 
             try {
             	page = getResponse(response1.getEntity());            	
@@ -95,7 +95,7 @@ public class PikabuParser {
 			if(element.getElementsByAttribute("data-story-type").first().attr("data-story-type").equals("text")){
 				PikabuTextPost post = new PikabuTextPost();
 				post.id = Integer.parseInt( element.attr("data-story-id") );
-				post.rating = Integer.parseInt( element.getElementsByAttributeValue("class", "story__rating-block").first().text() );
+			//	post.rating = Integer.parseInt( element.getElementsByAttributeValue("class", "story__rating-block").first().text() );
 				post.URL = element.getElementsByAttributeValue("class", "story__header-title").first().getElementsByAttribute("href").first().attr("href");
 				post.title =  element.getElementsByAttributeValue("class", "story__header-title").first().getElementsByAttribute("href").first().text();
 				post.content = element.getElementsByAttributeValue("class", "story__wrapper").text();
